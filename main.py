@@ -10,6 +10,6 @@
 #     with open('./%s/%s' % (root_dir, file[i]), 'r') as feature_file:
 #         feature = Feature()
 #         pass
-from models.bdd_artifact import Artifact
+from models.artifact import Artifact
 
-bdd = Artifact('example')
+bdd = Artifact('jdasi')

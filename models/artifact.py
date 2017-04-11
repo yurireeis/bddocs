@@ -27,6 +27,9 @@ class Artifact(object):
         :return: return a tuple with dir and artifact name
         :rtype: tuple
         """
+        if not os.path.exists(path):
+            raise Exception('You must set a valid path')
+
         found_artifacts = []
         for root, sub_dirs, files in os.walk(path):
             for file in files:

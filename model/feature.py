@@ -1,4 +1,7 @@
 class Feature(object):
+    """
+    Docstring for Feature class
+    """
     title = None
     # regex = r"\b(Feature:)"
 

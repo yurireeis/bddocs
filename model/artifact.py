@@ -3,7 +3,7 @@ from model.feature import Feature
 
 class Artifact(object):
     """
-    set class Docstring
+    Docstring for Artifact class
     """
 
     def __init__(self, _dir, file):

@@ -7,7 +7,7 @@ artifacts_ext = '.feature'
 
 class Documentation(object):
     """
-    Docstring for class
+    Docstring for Documentation class
     """
     def __init__(self, path):
         """

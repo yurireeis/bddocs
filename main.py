@@ -1,3 +1,3 @@
-from documentation import Documentation
+from model.documentation import Documentation
 
 bdd = Documentation('example')

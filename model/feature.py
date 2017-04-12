@@ -1,49 +1,95 @@
+from model.scenario import Scenario
+
+
 class Feature(object):
     """
     Docstring for Feature class
     """
+
     title = None
-    # regex = r"\b(Feature:)"
+    actor = None
+    objective = None
+    value = None
+    scenarios = []
 
     def __init__(self, file_path):
         self.path = file_path
-        self.title = self.get_title()
-        self.actor, self.objective, self.value = self.get_template()
+        self.fill_title()
+        self.fill_header()
+        self.fill_scenarios()
 
-    def get_title(self):
+    def __is_title(self, line):
         """
 
-        :return: a String with Feature title
-        :rtype: str
+        :return: bool
+        """
+        if line.startswith('Feature:'):
+            self.title = line.replace('Feature:', '')
+            return True
+
+        return False
+
+    def __is_actor(self, line):
+        """
+        Set the Actor (or role) from document
+        :return:
+        """
+        if line.startswith('As a'):
+            self.actor = line.replace('As a', '')
+
+    def __is_objective(self, line):
+        """
+        Set the Objective from document
+        :return:
+        """
+        if line.startswith('As a'):
+            self.objective = line.replace('I want', '')
+
+    def ___value_proposition(self, line):
+        """
+        Set the Objective from document
+        :return:
+        """
+        if line.startswith('As a'):
+            self.objective = line.replace('So that', '')
+
+    def fill_title(self):
+        """
+        A feature must have a title (otherwise is invalid)
         """
         with open(self.path, 'r') as file:
             for line in file.readlines():
-                if line.startswith('Feature:'):
-                    return line.replace('Feature:', '')
+                if self.__is_title(line):
+                    return True
 
+        # TODO: create class with no pattern found specific exceptions
         raise Exception("This artifact Don't have any feature inside")
 
-    def get_template(self):
+    def fill_header(self):
         """
 
-        Get the Feature template from document
+        This function scan file looking for patterns and
+        fill feature header
 
-        :param file_path:
-        :return: three way tuple
-        :rtype: tuple
+        :return:
         """
-
-        actor = objective = value = None
-
         with open(self.path, 'r') as file:
             for line in file.readlines():
-                if line.startswith('As a'):
-                    actor = line.replace('As a', '')
+                # get feature header
+                self.__is_title(line)
+                self.__is_actor(line)
+                self.__is_objective(line)
+                self.___value_proposition(line)
 
-                elif line.startswith('I want'):
-                    objective = line.replace('I want', '')
-
-                elif line.startswith('So that'):
-                    value = line.replace('So that', '')
-
-        return actor, objective, value
+    def fill_scenarios(self):
+        """
+        This functions set a list of scenarios objects
+        """
+        # fill if scenario is not null
+        with open(self.path, 'r') as file:
+            scenario = Scenario()
+            for line in file.readlines():
+                # fill scenarios list
+                if scenario.is_valid(line):
+                    self.scenarios.append(scenario)
+                    scenario = Scenario()

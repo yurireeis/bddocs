@@ -4,5 +4,9 @@ Feature: Criar post
 As a common user
 So that I cant let it go without worries
 
-Scenario: # Enter scenario name here
+Scenario: cenário 1
+# Enter steps here
+
+
+Scenario: cenário 2
 # Enter steps here

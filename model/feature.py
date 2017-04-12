@@ -10,13 +10,12 @@ class Feature(object):
     actor = None
     objective = None
     value = None
-    scenarios = []
 
     def __init__(self, file_path):
         self.path = file_path
         self.fill_title()
         self.fill_header()
-        self.fill_scenarios()
+        self.scenarios = self.fill_body()
 
     def __is_title(self, line):
         """
@@ -45,13 +44,23 @@ class Feature(object):
         if line.startswith('As a'):
             self.objective = line.replace('I want', '')
 
-    def ___value_proposition(self, line):
+    def __is_value_proposition(self, line):
         """
-        Set the Objective from document
+        Set the Value Proposition from document
         :return:
         """
         if line.startswith('As a'):
             self.objective = line.replace('So that', '')
+
+    def __is_scenario(self, line):
+        """
+
+        :return:
+        """
+        if line.startswith('Scenario'):
+            return True
+
+        return False
 
     def fill_title(self):
         """
@@ -79,17 +88,19 @@ class Feature(object):
                 self.__is_title(line)
                 self.__is_actor(line)
                 self.__is_objective(line)
-                self.___value_proposition(line)
+                self.__is_value_proposition(line)
 
-    def fill_scenarios(self):
+    def fill_body(self):
         """
-        This functions set a list of scenarios objects
+        Fill feature body
+        :return:
         """
-        # fill if scenario is not null
+        scenarios = []
         with open(self.path, 'r') as file:
-            scenario = Scenario()
             for line in file.readlines():
-                # fill scenarios list
-                if scenario.is_valid(line):
-                    self.scenarios.append(scenario)
+                if self.__is_scenario(line):
                     scenario = Scenario()
+                    scenario.set_title(line)
+                    scenarios.append(scenario)
+
+        return scenarios

@@ -2,5 +2,9 @@
 Feature: Criar comentário
 # Enter feature description here
 
-Scenario: # Enter scenario name here
+Scenario: cenário 3
+# Enter steps here
+
+
+Scenario: cenário 4
 # Enter steps here

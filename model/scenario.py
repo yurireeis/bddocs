@@ -5,20 +5,15 @@ class Scenario(object):
     # feature_regex = r"\b(Feature:)"
     # scenario_regex = r"\b(Scenario:)"
 
+    steps = []
     title = None
 
-    steps = []
-
-    def is_valid(self, line):
+    def set_title(self, line):
         """
-        This function validate if is a line with scenario or not
-        :return: True if is a scenario line
-        """
-        if line.startswith('Scenario:'):
-            self.title = line.replace('Scenario:', '')
-            return True
 
-        return False
+        :return:
+        """
+        self.title = line.replace('Scenario:', '')
 
     def __is_context(self, line):
         """
@@ -48,3 +43,11 @@ class Scenario(object):
         """
         if line.startswith('Given'):
             self.steps.append(line.replace('Then', ''))
+
+    def __fill_scenario(self):
+        """
+        This private method fills scenario info
+        :return:
+        """
+        pass
+

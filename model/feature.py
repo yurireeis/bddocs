@@ -1,3 +1,5 @@
+import re
+
 from model.scenario import Scenario
 
 
@@ -5,76 +7,60 @@ class Feature(object):
     """
     Docstring for Feature class
     """
-
-    title = None
     actor = None
     objective = None
     value = None
+    line_offset = []
 
-    def __init__(self, file_path):
-        self.path = file_path
-        self.fill_title()
-        self.fill_header()
-        self.scenarios = self.fill_body()
-
-    def __is_title(self, line):
+    def __init__(self, title, start, line_offset):
         """
 
-        :return: bool
+        :param title: the feature title
+        :type title: str
+        :param start: the feature start line
+        :type start: int
+        :param file_path: the file path from Artifact
+        :type file_path: str
         """
-        if line.startswith('Feature:'):
-            self.title = line.replace('Feature:', '')
-            return True
-
-        return False
+        self.title = title
+        self.start_line = start
+        self.line_offset = line_offset
+        self.__fill_header()
+        self.scenarios = self.__retrieve_scenarios()
 
     def __is_actor(self, line):
         """
         Set the Actor (or role) from document
         :return:
         """
-        if line.startswith('As a'):
-            self.actor = line.replace('As a', '')
+        regex = r"(As a)\b"
+        return re.search(regex, line)
 
     def __is_objective(self, line):
         """
         Set the Objective from document
         :return:
         """
-        if line.startswith('As a'):
-            self.objective = line.replace('I want', '')
+        regex = r"(I want)\b"
+        return re.search(regex, line)
 
     def __is_value_proposition(self, line):
         """
         Set the Value Proposition from document
         :return:
         """
-        if line.startswith('As a'):
-            self.objective = line.replace('So that', '')
+        regex = r"(So that)\b"
+        return re.search(regex, line)
 
     def __is_scenario(self, line):
         """
 
         :return:
         """
-        if line.startswith('Scenario'):
-            return True
+        regex = r"(Scenario:)"
+        return re.search(regex, line)
 
-        return False
-
-    def fill_title(self):
-        """
-        A feature must have a title (otherwise is invalid)
-        """
-        with open(self.path, 'r') as file:
-            for line in file.readlines():
-                if self.__is_title(line):
-                    return True
-
-        # TODO: create class with no pattern found specific exceptions
-        raise Exception("This artifact Don't have any feature inside")
-
-    def fill_header(self):
+    def __fill_header(self):
         """
 
         This function scan file looking for patterns and
@@ -82,25 +68,27 @@ class Feature(object):
 
         :return:
         """
-        with open(self.path, 'r') as file:
-            for line in file.readlines():
-                # get feature header
-                self.__is_title(line)
-                self.__is_actor(line)
-                self.__is_objective(line)
-                self.__is_value_proposition(line)
+        actor, objective, value = None, None, None
 
-    def fill_body(self):
+        for pos, text in self.line_offset:
+            if self.__is_actor(text):
+                actor = text
+            elif self.__is_objective(text):
+                objective = text
+            elif self.__is_value_proposition(text):
+                value = text
+            elif actor and objective and value:
+                break
+
+    def __retrieve_scenarios(self):
         """
         Fill feature body
         :return:
         """
         scenarios = []
-        with open(self.path, 'r') as file:
-            for line in file.readlines():
-                if self.__is_scenario(line):
-                    scenario = Scenario()
-                    scenario.set_title(line)
-                    scenarios.append(scenario)
+        rows = [x[1] for x in self.line_offset]
+        for pos in range(self.start_line, len(self.line_offset)):
+            if self.__is_scenario(rows[pos]):
+                scenarios.append(Scenario(rows[pos], pos, self.line_offset))
 
         return scenarios

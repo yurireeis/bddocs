@@ -1,12 +1,16 @@
 # Created by yreis at 4/11/17
-Feature: Criar post
-# Enter feature description here
-As a common user
-So that I cant let it go without worries
+Feature: Create comment
+  As a common user
+  I want to create comment
+  So that I can share my impressions with posts
 
-Scenario: cenário 1
-# Enter steps here
+Scenario: create comment
+  Given user user is logged
+  When he go to control panel
+  Then will see an access denied message
 
 
-Scenario: cenário 2
-# Enter steps here
+Scenario: create comment with mention
+  Given user user is logged
+  When he go to control panel
+  Then will see an access denied message

@@ -1,19 +1,21 @@
+import re
+
+from model.step import Step
+
+
 class Scenario(object):
     """
     Docstring for scenario class
     """
+
     # feature_regex = r"\b(Feature:)"
     # scenario_regex = r"\b(Scenario:)"
 
-    steps = []
-    title = None
-
-    def set_title(self, line):
-        """
-
-        :return:
-        """
-        self.title = line.replace('Scenario:', '')
+    def __init__(self, title, start, line_offset):
+        self.title = title
+        self.start_line = start
+        self.line_offset = line_offset
+        self.steps = self.__retrieve_steps()
 
     def __is_context(self, line):
         """
@@ -22,8 +24,8 @@ class Scenario(object):
 
         :return:
         """
-        if line.startswith('Given'):
-            self.steps.append(line.replace('Given', ''))
+        regex = r"(Given)"
+        return re.search(regex, line)
 
     def __is_action(self, line):
         """
@@ -32,8 +34,8 @@ class Scenario(object):
 
         :return:
         """
-        if line.startswith('Given'):
-            self.steps.append(line.replace('When', ''))
+        regex = r"(When)"
+        return re.search(regex, line)
 
     def __is_expected_behavior(self, line):
         """
@@ -41,13 +43,27 @@ class Scenario(object):
         This private function allows you to retrieve Then (en-us) steps
 
         """
-        if line.startswith('Given'):
-            self.steps.append(line.replace('Then', ''))
+        regex = r"(Then)"
+        return re.search(regex, line)
 
-    def __fill_scenario(self):
+    def __retrieve_steps(self):
         """
-        This private method fills scenario info
+
         :return:
         """
-        pass
+        steps = []
+        rows = [x[1] for x in self.line_offset]
+        for pos in range(self.start_line, len(self.line_offset)):
+            if self.__is_context(rows[pos]):
+                steps.append(Step(rows[pos], pos, self.line_offset))
+            elif self.__is_action(rows[pos]):
+                steps.append(Step(rows[pos], pos, self.line_offset))
+            elif self.__is_expected_behavior(rows[pos]):
+                steps.append(Step(rows[pos], pos, self.line_offset))
+            elif rows[pos].startswith('\n'):
+                break
 
+        if not steps:
+            return None
+
+        return steps

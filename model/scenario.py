@@ -15,7 +15,7 @@ class Scenario(object):
         self.title = title
         self.start_line = start
         self.line_offset = line_offset
-        self.steps = self.__retrieve_steps()
+        self.__get_steps()
 
     def __is_context(self, line):
         """
@@ -46,7 +46,7 @@ class Scenario(object):
         regex = r"(Then)"
         return re.search(regex, line)
 
-    def __retrieve_steps(self):
+    def __get_steps(self):
         """
 
         :return:
@@ -63,7 +63,4 @@ class Scenario(object):
             elif rows[pos].startswith('\n'):
                 break
 
-        if not steps:
-            return None
-
-        return steps
+        self.steps = steps

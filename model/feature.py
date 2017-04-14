@@ -25,15 +25,15 @@ class Feature(object):
         self.title = title
         self.start_line = start
         self.line_offset = line_offset
-        self.__fill_header()
-        self.scenarios = self.__retrieve_scenarios()
+        self.__get_header()
+        self.__get_scenarios()
 
     def __is_actor(self, line):
         """
         Set the Actor (or role) from document
         :return:
         """
-        regex = r"(As a)\b"
+        regex = r"(As a)"
         return re.search(regex, line)
 
     def __is_objective(self, line):
@@ -41,7 +41,7 @@ class Feature(object):
         Set the Objective from document
         :return:
         """
-        regex = r"(I want)\b"
+        regex = r"(I want)"
         return re.search(regex, line)
 
     def __is_value_proposition(self, line):
@@ -49,7 +49,7 @@ class Feature(object):
         Set the Value Proposition from document
         :return:
         """
-        regex = r"(So that)\b"
+        regex = r"(So that)"
         return re.search(regex, line)
 
     def __is_scenario(self, line):
@@ -57,30 +57,29 @@ class Feature(object):
 
         :return:
         """
-        regex = r"(Scenario:)"
+        regex = r"(Scenario)"
         return re.search(regex, line)
 
-    def __fill_header(self):
+    def __get_header(self):
         """
 
         This function scan file looking for patterns and
         fill feature header
 
-        :return:
         """
         actor, objective, value = None, None, None
 
         for pos, text in self.line_offset:
-            if self.__is_actor(text):
-                actor = text
-            elif self.__is_objective(text):
-                objective = text
-            elif self.__is_value_proposition(text):
-                value = text
-            elif actor and objective and value:
+            if actor and objective and value:
                 break
+            elif self.__is_actor(text):
+                self.actor = text
+            elif self.__is_objective(text):
+                self.objective = text
+            elif self.__is_value_proposition(text):
+                self.value = text
 
-    def __retrieve_scenarios(self):
+    def __get_scenarios(self):
         """
         Fill feature body
         :return:
@@ -91,4 +90,4 @@ class Feature(object):
             if self.__is_scenario(rows[pos]):
                 scenarios.append(Scenario(rows[pos], pos, self.line_offset))
 
-        return scenarios
+        self.scenarios = scenarios

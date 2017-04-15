@@ -1,6 +1,6 @@
 import os
 from model.artifact import Artifact
-from pdf import PDF
+from src.pdf.pdf import PDF
 
 artifacts_ext = '.feature'
 

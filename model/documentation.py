@@ -49,8 +49,13 @@ class Documentation(HTML, PDF):
         if not self.artifacts:
             raise Exception('you must set a path with valid artifacts')
 
-    def html_preview(self):
-        return self.html_page
+    def html_output(self, filename=None):
+        if filename:
+            with open(filename + '.html', 'w') as file:
+                return file.writelines(str(self.html_page))
+
+        with open('default.html', 'w') as file:
+            return file.write(str(self.html_page))
 
     def pdf_output(self):
         """

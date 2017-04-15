@@ -1,24 +1,34 @@
 import os
 from model.artifact import Artifact
+from src.html.html import HTML
 from src.pdf.pdf import PDF
 
 artifacts_ext = '.feature'
 
 
-class Documentation(PDF):
+class Documentation(HTML, PDF):
     """
     Docstring for Documentation class
     """
     artifacts = []
 
-    def __init__(self, path):
+    def __init__(self, path, name=None):
         """
 
         :param path: the feature file path (to retrieve artifacts)
+        :param name: the name of enterprise (goes in Documentation). Default is None
+        :type name: str
         """
+        self.name = name
         self.path = path
         self.get_artifacts()
-        super(Documentation, self).__init__(self)
+        # FIXME: eliminate this aproach above ASAP (when you find the correct manner to solve)
+        doc = self
+        PDF.__init__(self, doc)
+        HTML.__init__(self, doc)
+
+    def preview(self):
+        return self.page
 
     def get_artifacts(self):
         """
@@ -38,3 +48,16 @@ class Documentation(PDF):
 
         if not self.artifacts:
             raise Exception('you must set a path with valid artifacts')
+
+    def html_preview(self):
+        return self.html_page
+
+    def pdf_output(self):
+        """
+
+        :return:
+        """
+        if self.name:
+            return self.output(self.name, 'F')
+
+        return self.output('default.pdf', 'F')

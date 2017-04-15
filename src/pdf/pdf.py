@@ -4,7 +4,7 @@ from fpdf import FPDF
 class PDF(FPDF):
     def __init__(self, documentation, logo=None):
         super(PDF, self).__init__()
-        self.bdd = documentation
+        self.docs = documentation
         self.logo = logo
         self.body()
 
@@ -25,7 +25,7 @@ class PDF(FPDF):
         self.alias_nb_pages()
         self.add_page()
 
-        for artifact in self.bdd.artifacts:
+        for artifact in self.docs.artifacts:
             feature = artifact.feature
 
             # feature title
@@ -76,4 +76,3 @@ class PDF(FPDF):
         self.set_font('Arial', 'I', 8)
         # Page number
         self.cell(0, 10, 'Page ' + str(self.page_no()) + '/{nb}', 0, 0, 'C')
-

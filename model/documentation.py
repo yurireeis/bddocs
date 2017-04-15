@@ -1,11 +1,11 @@
 import os
-
 from model.artifact import Artifact
+from pdf import PDF
 
 artifacts_ext = '.feature'
 
 
-class Documentation(object):
+class Documentation(PDF):
     """
     Docstring for Documentation class
     """
@@ -18,6 +18,7 @@ class Documentation(object):
         """
         self.path = path
         self.get_artifacts()
+        super(Documentation, self).__init__(self)
 
     def get_artifacts(self):
         """

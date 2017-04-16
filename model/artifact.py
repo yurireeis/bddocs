@@ -1,5 +1,5 @@
 import re
-
+from config.constants import FEATURE
 from model.feature import Feature
 
 
@@ -9,6 +9,7 @@ class Artifact(object):
     """
 
     feature = None
+
     line_offset = []
 
     def __init__(self, _dir, file):
@@ -22,6 +23,9 @@ class Artifact(object):
         self.file_path = './%s/%s' % (_dir, file)
         self.line_offset = self.__get_line_offset()
         self.__retrieve_feature()
+
+        if not self.feature:
+            Exception('You must have at least one feature in file %s' % file)
 
     def __get_line_offset(self):
         """
@@ -41,7 +45,7 @@ class Artifact(object):
 
         :return: bool
         """
-        regex = r"(Feature)"
+        regex = r"({})".format(FEATURE)
         return re.match(regex, line)
 
     def __retrieve_feature(self):

@@ -1,7 +1,12 @@
 from fpdf import FPDF
 
+from config.constants import NO_STEPS_MSG, NO_SCENARIOS_MSG
+
 
 class PDF(FPDF):
+    """
+    Docstring for PDF class
+    """
     def __init__(self, documentation, logo=None):
         super(PDF, self).__init__()
         self.docs = documentation
@@ -53,7 +58,7 @@ class PDF(FPDF):
                     self.cell(0, 10, scenario.title, 0, 1)
 
                     if not scenario.steps:
-                        self.cell(0, 10, '[This scenario Dont have steps yet]', 0, 1)
+                        self.cell(0, 10, NO_STEPS_MSG, 0, 1)
                     else:
                         self.set_font('Times', '', 10)
                         for step in scenario.steps:
@@ -63,7 +68,7 @@ class PDF(FPDF):
                 self.cell(0, 10, '', 0, 1)
 
             else:
-                self.cell(0, 10, 'This feature Dont Have scenarios', 0, 1)
+                self.cell(0, 10, NO_SCENARIOS_MSG, 0, 1)
 
                 # break line if you dont have scenarios in this feature
                 self.cell(0, 10, '', 0, 1)

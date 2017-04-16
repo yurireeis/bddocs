@@ -1,3 +1,4 @@
+from config.constants import NO_VALID_PROPOSITION_MSG, NO_SCENARIOS_MSG, NO_STEPS_MSG
 from src.markup import markup
 
 
@@ -46,7 +47,7 @@ class HTML(object):
                 self.html_page.p(feature.value)
 
             if not feature.actor and not feature.objective and not feature.value:
-                self.html_page.p('No value proposition found')
+                self.html_page.p(NO_VALID_PROPOSITION_MSG)
 
             # break line
             self.html_page.br()
@@ -57,7 +58,7 @@ class HTML(object):
                     self.html_page.p(scenario.title)
 
                     if not scenario.steps:
-                        self.html_page.p('[This scenario dont have steps yet]')
+                        self.html_page.p(NO_STEPS_MSG)
                     else:
                         for step in scenario.steps:
                             self.html_page.p(step.title)
@@ -66,7 +67,7 @@ class HTML(object):
                 self.html_page.br()
 
             else:
-                self.html_page.p('This feature Dont have scenarios')
+                self.html_page.p(NO_SCENARIOS_MSG)
 
                 # break line if you dont have scenarios in this feature
                 self.html_page.br()

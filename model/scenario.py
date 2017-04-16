@@ -1,5 +1,6 @@
 import re
 
+from config.constants import CONTEXT, ACTION, EXPECTED_BEHAVIOR
 from model.step import Step
 
 
@@ -7,9 +8,6 @@ class Scenario(object):
     """
     Docstring for scenario class
     """
-
-    # feature_regex = r"\b(Feature:)"
-    # scenario_regex = r"\b(Scenario:)"
 
     def __init__(self, title, start, line_offset):
         self.title = title
@@ -24,7 +22,7 @@ class Scenario(object):
 
         :return:
         """
-        regex = r"(Given)"
+        regex = r"({})".format(CONTEXT)
         return re.search(regex, line)
 
     def __is_action(self, line):
@@ -34,7 +32,7 @@ class Scenario(object):
 
         :return:
         """
-        regex = r"(When)"
+        regex = r"({})".format(ACTION)
         return re.search(regex, line)
 
     def __is_expected_behavior(self, line):
@@ -43,7 +41,7 @@ class Scenario(object):
         This private function allows you to retrieve Then (en-us) steps
 
         """
-        regex = r"(Then)"
+        regex = r"({})".format(EXPECTED_BEHAVIOR)
         return re.search(regex, line)
 
     def __get_steps(self):

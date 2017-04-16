@@ -1,5 +1,5 @@
 import re
-
+from config.constants import VALUE_PROPOSITION, ACTOR, OBJECTIVE, SCENARIO
 from model.scenario import Scenario
 
 
@@ -33,7 +33,7 @@ class Feature(object):
         Set the Actor (or role) from document
         :return:
         """
-        regex = r"(As a)"
+        regex = r"({})".format(ACTOR)
         return re.search(regex, line)
 
     def __is_objective(self, line):
@@ -41,7 +41,7 @@ class Feature(object):
         Set the Objective from document
         :return:
         """
-        regex = r"(I want)"
+        regex = r"({})".format(OBJECTIVE)
         return re.search(regex, line)
 
     def __is_value_proposition(self, line):
@@ -49,7 +49,7 @@ class Feature(object):
         Set the Value Proposition from document
         :return:
         """
-        regex = r"(So that)"
+        regex = r"({})".format(VALUE_PROPOSITION)
         return re.search(regex, line)
 
     def __is_scenario(self, line):
@@ -57,7 +57,7 @@ class Feature(object):
 
         :return:
         """
-        regex = r"(Scenario)"
+        regex = r"({})".format(SCENARIO)
         return re.search(regex, line)
 
     def __get_header(self):

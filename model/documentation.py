@@ -1,6 +1,9 @@
 import os
 
-from config.constants import ARTIFACTS_EXTENSION, DEFAULT_FILENAME, INVALID_PATH_MSG, NO_VALID_ARTIFACTS_MSG
+import re
+
+from config.constants import ARTIFACTS_EXTENSION, DEFAULT_FILENAME, INVALID_PATH_MSG, NO_VALID_ARTIFACTS_MSG, \
+    NOT_IMPLEMENTED, CORE_FEATURE
 from model.artifact import Artifact
 from src.html.html import HTML
 from src.pdf.pdf import PDF
@@ -11,6 +14,7 @@ class Documentation(HTML, PDF):
     Docstring for Documentation class
     """
     artifacts = []
+    total_of_features = None
 
     def __init__(self, path, name=None):
         """
@@ -26,9 +30,75 @@ class Documentation(HTML, PDF):
         doc = self
         PDF.__init__(self, doc)
         HTML.__init__(self, doc)
+        self.get_number_of_features()
+        self.get_number_of_implemented_features()
+
+    def __is_implemented(self, tag):
+        """
+
+        :return: boolean result
+        :rtype: bool
+        """
+        regex = r"({})".format(NOT_IMPLEMENTED)
+
+        if not re.search(regex, tag):
+            return True
+
+        return False
+
+    def __is_core(self, tag):
+        """
+
+        :return:
+        """
+        regex = r"({})".format(CORE_FEATURE)
+        return re.search(regex, tag)
 
     def preview(self):
         return self.page
+
+    def get_number_of_features(self):
+        """
+
+        :return:
+        """
+        return len(self.artifacts)
+
+    def get_number_of_implemented_features(self):
+        """
+
+        :return:
+        """
+        imp_features = 0
+        for artifact in self.artifacts:
+            if self.__is_implemented(str(artifact.feature.tags)):
+                imp_features += 1
+
+        return imp_features
+
+    def get_number_of_core_features(self):
+        """
+
+        :return:
+        """
+        core_imp_features = 0
+        for artifact in self.artifacts:
+            if self.__is_core(str(artifact.feature.tags)):
+                core_imp_features += 1
+
+        return core_imp_features
+
+    def get_number_of_core_implemented_features(self):
+        """
+
+        :return:
+        """
+        core_imp_features = 0
+        for artifact in self.artifacts:
+            if self.__is_core(str(artifact.feature.tags)) and self.__is_implemented(str(artifact.feature.tags)):
+                core_imp_features += 1
+
+        return core_imp_features
 
     def get_artifacts(self):
         """

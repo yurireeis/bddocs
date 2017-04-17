@@ -11,6 +11,7 @@ class Feature(object):
     objective = None
     value = None
     line_offset = []
+    tags = []
 
     def __init__(self, title, start, line_offset):
         """
@@ -19,14 +20,15 @@ class Feature(object):
         :type title: str
         :param start: the feature start line
         :type start: int
-        :param file_path: the file path from Artifact
-        :type file_path: str
+        :param line_offset:
+        :type line_offset:
         """
         self.title = title
         self.start_line = start
         self.line_offset = line_offset
         self.__get_header()
         self.__get_scenarios()
+        self.__get_tags()
 
     def __is_actor(self, line):
         """
@@ -60,6 +62,15 @@ class Feature(object):
         regex = r"({})".format(SCENARIO)
         return re.search(regex, line)
 
+    def __is_tag(self, line):
+        """
+
+        :param line:
+        :return:
+        """
+        regex = r"(@)"
+        return re.search(regex, line)
+
     def __get_header(self):
         """
 
@@ -91,3 +102,12 @@ class Feature(object):
                 scenarios.append(Scenario(rows[pos], pos, self.line_offset))
 
         self.scenarios = scenarios
+
+    def __get_tags(self):
+        """
+        Fill feature tags
+        :return:
+        """
+        rows = [x[1] for x in self.line_offset]
+        if self.__is_tag(rows[self.start_line - 1]):
+            self.tags = rows[self.start_line - 1].split()

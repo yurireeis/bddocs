@@ -9,11 +9,14 @@ class Scenario(object):
     Docstring for scenario class
     """
 
+    tags = []
+
     def __init__(self, title, start, line_offset):
         self.title = title
         self.start_line = start
         self.line_offset = line_offset
         self.__get_steps()
+        self.__get_tags()
 
     def __is_context(self, line):
         """
@@ -44,6 +47,15 @@ class Scenario(object):
         regex = r"({})".format(EXPECTED_BEHAVIOR)
         return re.search(regex, line)
 
+    def __is_tag(self, line):
+        """
+
+        :param line:
+        :return:
+        """
+        regex = r"(@)"
+        return re.search(regex, line)
+
     def __get_steps(self):
         """
 
@@ -62,3 +74,12 @@ class Scenario(object):
                 break
 
         self.steps = steps
+
+    def __get_tags(self):
+        """
+        Fill feature tags
+        :return:
+        """
+        rows = [x[1] for x in self.line_offset]
+        if self.__is_tag(rows[self.start_line - 1]):
+            self.tags = rows[self.start_line - 1].split()

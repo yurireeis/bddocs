@@ -1,83 +1,83 @@
-from fpdf import FPDF
+from config.constants import NO_STEPS_MSG, NO_SCENARIOS_MSG, NO_VALUE_MSG
+from src.pdf.style import Style
 
-from config.constants import NO_STEPS_MSG, NO_SCENARIOS_MSG
 
-
-class PDF(FPDF):
+class PDF(Style):
     """
     Docstring for PDF class
     """
+
     def __init__(self, documentation, logo=None):
-        super(PDF, self).__init__()
+        """
+
+        :param documentation:
+        :param logo:
+        """
+        Style.__init__(self)
         self.docs = documentation
         self.logo = logo
         self.body()
 
-    def header(self):
-        # Logo
-        if self.logo:
-            self.image(self.logo, 10, 8, 33)
-        # Arial bold 15
-        self.set_font('Arial', 'B', 15)
-        # Move to the right
-        self.cell(80)
-        # Title
-        self.cell(30, 10, 'Title', 1, 0, 'C')
-        # Line break
-        self.ln(20)
+    # def header(self):
+    #     # Logo
+    #     if self.logo:
+    #         self.image(self.logo, 10, 8, 33)
+    #     # Arial bold 15
+    #     self.set_font('Arial', 'B', 15)
+    #     # Move to the right
+    #     self.cell(80)
+    #     # Title
+    #     # self.cell(30, 10, 'Title', 1, 0, 'C')
+    #     # Line break
+    #     self.ln(20)
 
     def body(self):
+
         self.alias_nb_pages()
-        self.add_page()
 
         for artifact in self.docs.artifacts:
             feature = artifact.feature
 
             # feature title
-            self.set_font('Times', 'B', 12)
-            self.cell(0, 10, feature.title.upper(), 0, 1)
+            self.add_page()
+            self.feature(feature.title.upper())
 
-            self.set_font('Times', '', 10)
             if feature.actor:
-                self.cell(0, 10, feature.actor, 0, 1)
+                self.value_proposition(feature.actor)
             if feature.objective:
-                self.cell(0, 10, feature.objective, 0, 1)
+                self.value_proposition(feature.objective)
             if feature.value:
-                self.cell(0, 10, feature.value, 0, 1)
+                self.value_proposition(feature.value)
 
             if not feature.actor and not feature.objective and not feature.value:
-                self.cell(0, 10, 'No value description', 0, 1)
+                self.value_proposition(NO_VALUE_MSG)
 
             # break line
-            self.cell(0, 10, '', 0, 1)
+            self.break_line()
 
             if feature.scenarios:
 
                 for scenario in feature.scenarios:
-                    self.set_font('Times', 'B', 12)
-                    self.cell(0, 10, scenario.title, 0, 1)
+                    self.scenario(scenario.title)
 
                     if not scenario.steps:
-                        self.cell(0, 10, NO_STEPS_MSG, 0, 1)
+                        self.scenario(NO_STEPS_MSG)
                     else:
-                        self.set_font('Times', '', 10)
                         for step in scenario.steps:
-                            self.cell(0, 10, step.title, 0, 1)
+                            self.step(step.title)
 
-                # break line after scenario
-                self.cell(0, 10, '', 0, 1)
+                        self.break_line()
 
             else:
-                self.cell(0, 10, NO_SCENARIOS_MSG, 0, 1)
+                self.scenario(NO_SCENARIOS_MSG)
 
-                # break line if you dont have scenarios in this feature
-                self.cell(0, 10, '', 0, 1)
+            self.break_line()
 
-    # Page footer
-    def footer(self):
-        # Position at 1.5 cm from bottom
-        self.set_y(-15)
-        # Arial italic 8
-        self.set_font('Arial', 'I', 8)
-        # Page number
-        self.cell(0, 10, 'Page ' + str(self.page_no()) + '/{nb}', 0, 0, 'C')
+            # Page footer
+            # def footer(self):
+            #     # Position at 1.5 cm from bottom
+            #     self.set_y(-15)
+            #     # Arial italic 8
+            #     self.set_font('Arial', 'I', 8)
+            #     # Page number
+            #     self.cell(0, 10, 'Página ' + str(self.page_no()) + ' de ' + '{nb}', 0, 0, 'C')

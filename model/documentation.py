@@ -78,6 +78,30 @@ class Documentation(object):
 
         return core_imp_features
 
+    def get_number_of_scenarios(self):
+        """
+
+        :return:
+        """
+        scenarios = 0
+        for artifact in self.artifacts:
+            if self.__is_implemented(str(artifact.feature.tags)):
+                scenarios += len(artifact.feature.scenarios)
+
+        return scenarios
+
+    def get_number_of_core_scenarios(self):
+        """
+
+        :return:
+        """
+        core_scenarios = 0
+        for artifact in self.artifacts:
+            if self.__is_core(str(artifact.feature.tags)) and self.__is_implemented(str(artifact.feature.tags)):
+                core_scenarios += len(artifact.feature.scenarios)
+
+        return core_scenarios
+
     def get_number_of_implemented_core_features(self):
         """
 
@@ -89,6 +113,34 @@ class Documentation(object):
                 core_imp_features += 1
 
         return core_imp_features
+
+    def get_number_of_implemented_scenarios(self):
+        """
+
+        :return:
+        """
+        imp_scenarios = 0
+        for artifact in self.artifacts:
+            if self.__is_implemented(str(artifact.feature.tags)):
+                for scenario in artifact.feature.scenarios:
+                    if self.__is_implemented(str(scenario.tags)):
+                        imp_scenarios += 1
+
+        return imp_scenarios
+
+    def get_number_of_implemented_core_scenarios(self):
+        """
+
+        :return:
+        """
+        imp_core_scenarios = 0
+        for artifact in self.artifacts:
+            if self.__is_core(str(artifact.feature.tags)) and self.__is_implemented(str(artifact.feature.tags)):
+                for scenario in artifact.feature.scenarios:
+                    if self.__is_implemented(str(scenario.tags)):
+                        imp_core_scenarios += 1
+
+        return imp_core_scenarios
 
     def get_artifacts(self):
         """
@@ -108,4 +160,3 @@ class Documentation(object):
 
         if not self.artifacts:
             raise Exception(INVALID_PATH_MSG)
-

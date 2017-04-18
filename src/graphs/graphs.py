@@ -76,6 +76,46 @@ class Graphs(object):
 
         return py.plot(fig, filename='python-streaming')
 
+    def scenarios_coverage(self):
+        """
+
+        :return:
+        """
+        self.stream(2)
+        fig = {
+            'data': [{
+                'labels': [IMPLEMENTED_LABEL, NOT_IMPLEMENTED_LABEL],
+                'values': [
+                    self.document.get_number_of_scenarios(),
+                    self.document.get_number_of_implemented_scenarios(),
+                ],
+                'type': 'pie'}
+            ],
+            'layout': {'title': CORE_TESTS_IMPLEMENTATION_LABEL}
+        }
+
+        return py.plot(fig, filename='python-streaming')
+
+    def core_scenarios_coverage(self):
+        """
+
+        :return:
+        """
+        self.stream(3)
+        fig = {
+            'data': [{
+                'labels': [IMPLEMENTED_LABEL, NOT_IMPLEMENTED_LABEL],
+                'values': [
+                    self.document.get_number_of_core_scenarios(),
+                    self.document.get_number_of_implemented_scenarios(),
+                ],
+                'type': 'pie'}
+            ],
+            'layout': {'title': CORE_TESTS_IMPLEMENTATION_LABEL}
+        }
+
+        return py.plot(fig, filename='python-streaming')
+
     def stream(self, pos):
         """
 

@@ -1,0 +1,1 @@
+http://github.com/yurireeis/bddocs/tarball/master#egg=master

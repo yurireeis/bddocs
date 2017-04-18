@@ -1,0 +1,23 @@
+Metadata-Version: 1.0
+Name: bddocs
+Version: 0.34
+Summary: Create end-user readable docs in Pythonic way
+Home-page: http://github.com/yurireeis/bddocs
+Author: Yuri Reis & Alexandre Reis
+Author-email: UNKNOWN
+License: UNKNOWN
+Description: Bddocs
+        --------
+        
+        ## How to start ##
+        
+        To use simply do::
+        
+        >>> from bddocs import Documentation  # to retrieve bdd information
+        >>> from bddocs import PDF  # to get PDF output
+        >>> from bddocs import HTML  # to get it HTML output
+        >>> bdd = Document('example')  # pass the path of .feature documents
+        >>> PDF(bdd).output('document.pdf')  # retrieve BDD info in a PDF file
+        >>> HTML(bdd).output('document.html')  # retrieve BDD info in a HTML file
+        
+Platform: All

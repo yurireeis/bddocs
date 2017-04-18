@@ -1,14 +1,11 @@
 import os
 import re
-from config.settings import ARTIFACTS_EXTENSION, DEFAULT_FILENAME, INVALID_PATH_MSG, NO_VALID_ARTIFACTS_MSG, \
+from config.settings import ARTIFACTS_EXTENSION, INVALID_PATH_MSG, NO_VALID_ARTIFACTS_MSG, \
     NOT_IMPLEMENTED, CORE_FEATURE
 from model.artifact import Artifact
-from src.graphs.graphs import Graphs
-from src.html.html import HTML
-from src.pdf.pdf import PDF
 
 
-class Documentation(HTML, PDF, Graphs):
+class Documentation(object):
     """
     Docstring for Documentation class
     """
@@ -25,11 +22,6 @@ class Documentation(HTML, PDF, Graphs):
         self.name = name
         self.path = path
         self.get_artifacts()
-        # FIXME: eliminate this approach above ASAP (when you find the correct manner to solve)
-        doc = self
-        PDF.__init__(self, doc)
-        HTML.__init__(self, doc)
-        Graphs.__init__(self, doc)
 
     def __is_implemented(self, tag):
         """
@@ -117,20 +109,3 @@ class Documentation(HTML, PDF, Graphs):
         if not self.artifacts:
             raise Exception(INVALID_PATH_MSG)
 
-    def html_output(self, filename=None):
-        if filename:
-            with open(filename, 'w') as file:
-                return file.writelines(str(self.html_page))
-
-        with open(DEFAULT_FILENAME + '.html', 'w') as file:
-            return file.write(str(self.html_page))
-
-    def pdf_output(self):
-        """
-
-        :return:
-        """
-        if self.name:
-            return self.output(self.name, 'F')
-
-        return self.output(DEFAULT_FILENAME + '.pdf', 'F')

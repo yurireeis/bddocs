@@ -1,4 +1,4 @@
-from config.settings import NO_VALID_PROPOSITION_MSG, NO_SCENARIOS_MSG, NO_STEPS_MSG
+from config.settings import NO_VALID_PROPOSITION_MSG, NO_SCENARIOS_MSG, NO_STEPS_MSG, DEFAULT_FILENAME
 from src.markup import markup
 
 
@@ -71,3 +71,11 @@ class HTML(object):
 
                 # break line if you dont have scenarios in this feature
                 self.html_page.br()
+
+    def output(self, filename=None):
+        if filename:
+            with open(filename, 'w') as file:
+                return file.writelines(str(self.html_page))
+
+        with open(DEFAULT_FILENAME + '.html', 'w') as file:
+            return file.write(str(self.html_page))

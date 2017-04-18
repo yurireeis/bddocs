@@ -81,3 +81,4 @@ class PDF(Style):
             #     self.set_font('Arial', 'I', 8)
             #     # Page number
             #     self.cell(0, 10, 'Página ' + str(self.page_no()) + ' de ' + '{nb}', 0, 0, 'C')
+

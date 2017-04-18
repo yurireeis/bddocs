@@ -81,7 +81,7 @@ class Graphs(object):
 
         :return:
         """
-        self.stream(2)
+        self.stream(0)
 
         fig = {
             'data': [{
@@ -102,13 +102,13 @@ class Graphs(object):
 
         :return:
         """
-        self.stream(3)
+        self.stream(0)
 
         fig = {
             'data': [{
                 'labels': [IMPLEMENTED_LABEL, NOT_IMPLEMENTED_LABEL],
                 'values': [
-                    self.document.get_number_of_implemented_scenarios(),
+                    self.document.get_number_of_implemented_core_scenarios(),
                     self.document.get_number_of_core_scenarios(),
 
                 ],

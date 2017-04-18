@@ -79,3 +79,4 @@ class HTML(object):
 
         with open(DEFAULT_FILENAME + '.html', 'w') as file:
             return file.write(str(self.html_page))
+

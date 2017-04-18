@@ -44,9 +44,6 @@ class Documentation(object):
         regex = r"({})".format(CORE_FEATURE)
         return re.search(regex, tag)
 
-    def preview(self):
-        return self.page
-
     def get_number_of_features(self):
         """
 

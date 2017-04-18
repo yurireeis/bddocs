@@ -2,7 +2,7 @@
 @criar_comentario
 Feature: Create comment
 
-@criar_comentario_simples @core
+@criar_comentario_simples
 Scenario: create comment
   Given user user is logged
   When he go to control panel

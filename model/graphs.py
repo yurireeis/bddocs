@@ -1,13 +1,16 @@
+import os
+
 import plotly.tools as config
 import plotly.plotly as py
 import plotly.graph_objs as go
 
-username = 'yurireeis'
-credential = 'JS2YQg2NQ7WP1n2OZc8i'
+from config.constants import OVERALL_TESTS_IMPLEMENTATION_LABEL, IMPLEMENTED_LABEL, NOT_IMPLEMENTED_LABEL, \
+    CORE_TESTS_IMPLEMENTATION_LABEL
+from model.documentation import Documentation
 
 
 class Graphs(object):
-    def __init__(self, user, api_key, readable=True, privacy='public'):
+    def __init__(self, document, readable=True, privacy='public'):
         """
 
         :param document:
@@ -16,6 +19,13 @@ class Graphs(object):
         :param privacy:
         """
         # self.document = document
+        self.document = document
+        user = os.getenv('PLOTLY_USER', None)
+        api_key = os.getenv('PLOTLY_KEY', None)
+
+        if not user or not api_key:
+            raise Exception('You must set Plotly Key user/api_key in environment variables')
+
         config.set_credentials_file(username=user, api_key=api_key)
         config.set_config_file(world_readable=readable, sharing=privacy)
         self.ids = self.get_stream_ids()
@@ -28,41 +38,52 @@ class Graphs(object):
         """
         return config.get_credentials_file()['stream_ids']
 
-    def general_coverage(self, title=None):
+    def general_feature_coverage(self):
         """
 
         :return:
         """
-        trace0 = go.Scatter(
-            x=[1, 2, 3, 4],
-            y=[10, 15, 13, 17]
-        )
-        trace1 = go.Scatter(
-            x=[1, 2, 3, 4],
-            y=[16, 5, 11, 9]
-        )
-        data = go.Data([trace0, trace1])
+        self.stream(0)
+        fig = {
+            'data': [{
+                'labels': [IMPLEMENTED_LABEL, NOT_IMPLEMENTED_LABEL],
+                'values': [
+                    self.document.get_number_of_features(),
+                    self.document.get_number_of_implemented_features()
+                ],
+                'type': 'pie'}
+            ],
+            'layout': {'title': OVERALL_TESTS_IMPLEMENTATION_LABEL}
+        }
 
-        if title:
-            layout = go.Layout(title=title)
-            fig = go.Figure(data=data, layout=layout)
-            return py.plot(fig, filename='python-streaming')
+        return py.plot(fig, filename='python-streaming')
 
-        return py.plot(data, filename='python-streaming')
+    def core_feature_coverage(self):
+        """
+
+        :return:
+        """
+        self.stream(1)
+        fig = {
+            'data': [{
+                'labels': [IMPLEMENTED_LABEL, NOT_IMPLEMENTED_LABEL],
+                'values': [
+                    self.document.get_number_of_core_features(),
+                    self.document.get_number_of_implemented_core_features(),
+                ],
+                'type': 'pie'}
+            ],
+            'layout': {'title': CORE_TESTS_IMPLEMENTATION_LABEL}
+        }
+
+        return py.plot(fig, filename='python-streaming')
 
     def stream(self, pos):
         """
 
         :param pos:
-        :param max_points:
         :return:
         """
         return go.Stream(
             token=self.ids[pos],
         )
-
-
-test = Graphs(username, credential)
-test.stream(0)
-test.general_coverage('Novo título')
-pass

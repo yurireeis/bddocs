@@ -46,8 +46,8 @@ class Graphs(object):
             'data': [{
                 'labels': [IMPLEMENTED_LABEL, NOT_IMPLEMENTED_LABEL],
                 'values': [
+                    self.document.get_number_of_implemented_features(),
                     self.document.get_number_of_features(),
-                    self.document.get_number_of_implemented_features()
                 ],
                 'type': 'pie'}
             ],
@@ -66,8 +66,8 @@ class Graphs(object):
             'data': [{
                 'labels': [IMPLEMENTED_LABEL, NOT_IMPLEMENTED_LABEL],
                 'values': [
-                    self.document.get_number_of_core_features(),
                     self.document.get_number_of_implemented_core_features(),
+                    self.document.get_number_of_core_features(),
                 ],
                 'type': 'pie'}
             ],

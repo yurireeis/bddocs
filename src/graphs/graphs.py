@@ -6,7 +6,6 @@ import plotly.graph_objs as go
 
 from config.settings import OVERALL_TESTS_IMPLEMENTATION_LABEL, IMPLEMENTED_LABEL, NOT_IMPLEMENTED_LABEL, \
     CORE_TESTS_IMPLEMENTATION_LABEL
-from model.documentation import Documentation
 
 
 class Graphs(object):
@@ -18,7 +17,6 @@ class Graphs(object):
         :param readable:
         :param privacy:
         """
-        # self.document = document
         self.document = document
         user = os.getenv('PLOTLY_USER', None)
         api_key = os.getenv('PLOTLY_KEY', None)

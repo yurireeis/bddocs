@@ -3,11 +3,12 @@ import re
 from config.settings import ARTIFACTS_EXTENSION, DEFAULT_FILENAME, INVALID_PATH_MSG, NO_VALID_ARTIFACTS_MSG, \
     NOT_IMPLEMENTED, CORE_FEATURE
 from model.artifact import Artifact
+from src.graphs.graphs import Graphs
 from src.html.html import HTML
 from src.pdf.pdf import PDF
 
 
-class Documentation(HTML, PDF):
+class Documentation(HTML, PDF, Graphs):
     """
     Docstring for Documentation class
     """
@@ -28,8 +29,7 @@ class Documentation(HTML, PDF):
         doc = self
         PDF.__init__(self, doc)
         HTML.__init__(self, doc)
-        self.get_number_of_features()
-        self.get_number_of_implemented_features()
+        Graphs.__init__(self, doc)
 
     def __is_implemented(self, tag):
         """

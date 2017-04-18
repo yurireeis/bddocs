@@ -1,6 +1,6 @@
 import re
 
-from config.constants import CONTEXT, ACTION, EXPECTED_BEHAVIOR
+from config.settings import CONTEXT, ACTION, EXPECTED_BEHAVIOR
 from model.step import Step
 
 

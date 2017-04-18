@@ -1,4 +1,4 @@
-from config.constants import NO_STEPS_MSG, NO_SCENARIOS_MSG, NO_VALUE_MSG
+from config.settings import NO_STEPS_MSG, NO_SCENARIOS_MSG, NO_VALUE_MSG
 from src.pdf.style import Style
 
 

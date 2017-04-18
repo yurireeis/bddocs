@@ -4,7 +4,7 @@ import plotly.tools as config
 import plotly.plotly as py
 import plotly.graph_objs as go
 
-from config.constants import OVERALL_TESTS_IMPLEMENTATION_LABEL, IMPLEMENTED_LABEL, NOT_IMPLEMENTED_LABEL, \
+from config.settings import OVERALL_TESTS_IMPLEMENTATION_LABEL, IMPLEMENTED_LABEL, NOT_IMPLEMENTED_LABEL, \
     CORE_TESTS_IMPLEMENTATION_LABEL
 from model.documentation import Documentation
 

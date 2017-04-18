@@ -1,6 +1,6 @@
 import os
 import re
-from config.constants import ARTIFACTS_EXTENSION, DEFAULT_FILENAME, INVALID_PATH_MSG, NO_VALID_ARTIFACTS_MSG, \
+from config.settings import ARTIFACTS_EXTENSION, DEFAULT_FILENAME, INVALID_PATH_MSG, NO_VALID_ARTIFACTS_MSG, \
     NOT_IMPLEMENTED, CORE_FEATURE
 from model.artifact import Artifact
 from src.html.html import HTML

@@ -1,5 +1,5 @@
 import re
-from config.constants import FEATURE
+from config.settings import FEATURE
 from model.feature import Feature
 
 

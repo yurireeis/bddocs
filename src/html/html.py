@@ -1,4 +1,4 @@
-from config.constants import NO_VALID_PROPOSITION_MSG, NO_SCENARIOS_MSG, NO_STEPS_MSG
+from config.settings import NO_VALID_PROPOSITION_MSG, NO_SCENARIOS_MSG, NO_STEPS_MSG
 from src.markup import markup
 
 

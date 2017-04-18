@@ -1,5 +1,5 @@
 import re
-from config.constants import VALUE_PROPOSITION, ACTOR, OBJECTIVE, SCENARIO
+from config.settings import VALUE_PROPOSITION, ACTOR, OBJECTIVE, SCENARIO
 from model.scenario import Scenario
 
 

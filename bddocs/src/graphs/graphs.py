@@ -1,9 +1,8 @@
 import os
 
-import plotly.tools as config
-import plotly.plotly as py
 import plotly.graph_objs as go
-
+import plotly.plotly as py
+import plotly.tools as config
 from config.settings import OVERALL_TESTS_IMPLEMENTATION_LABEL, IMPLEMENTED_LABEL, NOT_IMPLEMENTED_LABEL, \
     CORE_TESTS_IMPLEMENTATION_LABEL, CORE_SCENARIOS_IMPLEMENTATION_LABEL, SCENARIOS_IMPLEMENTATION_LABEL
 

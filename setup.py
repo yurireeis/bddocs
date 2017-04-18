@@ -12,12 +12,17 @@ def readme():
         return f.read()
 
 setup(name='bddocs',
-      version='0.34',
+      version='0.37',
       description='Create end-user readable docs in Pythonic way',
+      packages=['bddocs'],
       long_description=readme(),
       author='Yuri Reis & Alexandre Reis',
-      install_requires=['wheel', 'fpdf>=1.7.2', 'plotly>=2.0.7'],
+      install_requires=[
+            'wheel',
+            'fpdf>=1.7.2',
+            'plotly>=2.0.7'],
       url='http://github.com/yurireeis/bddocs',
       dependency_links=['http://github.com/yurireeis/bddocs/tarball/master#egg=master'],
-      platforms='All'
+      platforms='All',
+      zip_safe=True,
       )

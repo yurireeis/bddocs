@@ -1,7 +1,9 @@
 import os
 import re
+
 from config.settings import ARTIFACTS_EXTENSION, INVALID_PATH_MSG, NO_VALID_ARTIFACTS_MSG, \
     NOT_IMPLEMENTED, CORE_FEATURE
+
 from model.artifact import Artifact
 
 

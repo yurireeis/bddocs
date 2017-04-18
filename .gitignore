@@ -3,3 +3,5 @@
 *.pdf
 *.html
 bddocs.egg-info
+dist
+build

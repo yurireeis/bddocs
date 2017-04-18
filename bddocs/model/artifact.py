@@ -1,7 +1,5 @@
 import re
-
-from config.i18n import languages
-from config.settings import LANGUAGE, INVALID_FEATURE_MSG, FEATURE
+from config.i18n import languagesfrom config.settings import LANGUAGE, INVALID_FEATURE_MSG,FEATURE
 from model.feature import Feature
 
 

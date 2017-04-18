@@ -1,4 +1,5 @@
 from config.settings import NO_VALID_PROPOSITION_MSG, NO_SCENARIOS_MSG, NO_STEPS_MSG, DEFAULT_FILENAME
+
 from src.markup import markup
 
 

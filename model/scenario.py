@@ -1,5 +1,6 @@
 import re
 
+from config.i18n import languages
 from config.settings import CONTEXT, ACTION, EXPECTED_BEHAVIOR
 from model.step import Step
 
@@ -11,10 +12,11 @@ class Scenario(object):
 
     tags = []
 
-    def __init__(self, title, start, line_offset):
+    def __init__(self, title, start, line_offset, language):
         self.title = title
         self.start_line = start
         self.line_offset = line_offset
+        self.language = language
         self.__get_steps()
         self.__get_tags()
 
@@ -25,7 +27,7 @@ class Scenario(object):
 
         :return:
         """
-        regex = r"({})".format(CONTEXT)
+        regex = r"({})".format(languages[self.language][CONTEXT][0])
         return re.search(regex, line)
 
     def __is_action(self, line):
@@ -35,7 +37,7 @@ class Scenario(object):
 
         :return:
         """
-        regex = r"({})".format(ACTION)
+        regex = r"({})".format(languages[self.language][ACTION][0])
         return re.search(regex, line)
 
     def __is_expected_behavior(self, line):
@@ -44,7 +46,7 @@ class Scenario(object):
         This private function allows you to retrieve Then (en-us) steps
 
         """
-        regex = r"({})".format(EXPECTED_BEHAVIOR)
+        regex = r"({})".format(languages[self.language][EXPECTED_BEHAVIOR][0])
         return re.search(regex, line)
 
     def __is_tag(self, line):

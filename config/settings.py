@@ -4,12 +4,12 @@ ARTIFACTS_EXTENSION = '.feature'
 # regex support string
 FEATURE = 'feature'
 SCENARIO = 'scenario'
-ACTOR = 'As a'
-VALUE_PROPOSITION = 'So that'
-OBJECTIVE = 'I want'
-CONTEXT = 'Given'
-ACTION = 'When'
-EXPECTED_BEHAVIOR = 'Then'
+ACTOR = 'as_a'
+VALUE_PROPOSITION = 'so_that'
+OBJECTIVE = 'i_wanna'
+CONTEXT = 'given'
+ACTION = 'when'
+EXPECTED_BEHAVIOR = 'then'
 LANGUAGE = 'language'
 
 # default filename for exports

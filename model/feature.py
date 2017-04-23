@@ -1,6 +1,7 @@
 import re
+
+from config.i18n import languages
 from config.settings import VALUE_PROPOSITION, ACTOR, OBJECTIVE, SCENARIO
-from model.i18n import languages
 from model.scenario import Scenario
 
 
@@ -37,7 +38,7 @@ class Feature(object):
         Set the Actor (or role) from document
         :return:
         """
-        regex = r"({})".format(ACTOR)
+        regex = r"({})".format(languages[self.language][ACTOR][0])
         return re.search(regex, line)
 
     def __is_objective(self, line):
@@ -45,7 +46,7 @@ class Feature(object):
         Set the Objective from document
         :return:
         """
-        regex = r"({})".format(OBJECTIVE)
+        regex = r"({})".format(languages[self.language][OBJECTIVE][0])
         return re.search(regex, line)
 
     def __is_value_proposition(self, line):
@@ -53,7 +54,7 @@ class Feature(object):
         Set the Value Proposition from document
         :return:
         """
-        regex = r"({})".format(VALUE_PROPOSITION)
+        regex = r"({})".format(languages[self.language][VALUE_PROPOSITION][0])
         return re.search(regex, line)
 
     def is_scenario(self, line):
@@ -101,7 +102,7 @@ class Feature(object):
         rows = [x[1] for x in self.line_offset]
         for pos in range(self.start_line, len(self.line_offset)):
             if self.is_scenario(rows[pos]):
-                scenarios.append(Scenario(rows[pos], pos, self.line_offset))
+                scenarios.append(Scenario(rows[pos], pos, self.line_offset, self.language))
 
         self.scenarios = scenarios
 

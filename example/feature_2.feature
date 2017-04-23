@@ -2,18 +2,21 @@
 # language: pt
 @criar_post @core
 Funcionalidade: Criar post
-As a common user
-I want to create post
-So that I can communicate with other areas
+  Como usuário da aplicação
+  Quero criar post
+  Para que possa me comunicar com outras áreas
 
 @criar_post_simples
 Cenário: Criar post
-  Given user is logged
-  When he go to control panel
-  When will see the people settings
+  Dado que o usuário está logado
+  Quando compor um post no feed
+  E postar
+  Então ele verá o post no feed
 
 @criar_post_com_mencao
 Cenário: create post with mention
-  Given user is not logged
-  When he go to control panel
-  When will see an access denied message
+  Dado que o usuário está logado
+  Quando compor um post no feed com menção
+  E postar
+  Então ele verá o post no feed com a menção
+  E na ação de clique a menção deverá direcionar o usuário ao perfil do usuário mencionado

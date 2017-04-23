@@ -1,7 +1,7 @@
 # Created by yreis at 4/11/17
+# language: pt
 @criar_post @core
-Feature: Create post
-# Enter feature description here
+Funcionalidade: Criar post
 As a common user
 I want to create post
 So that I can communicate with other areas

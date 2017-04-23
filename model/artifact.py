@@ -1,6 +1,7 @@
 import re
-from config.settings import FEATURE
+from config.settings import LANGUAGE, INVALID_FEATURE_MSG, FEATURE
 from model.feature import Feature
+from model.i18n import languages
 
 
 class Artifact(object):
@@ -22,10 +23,27 @@ class Artifact(object):
         """
         self.file_path = './%s/%s' % (_dir, file)
         self.line_offset = self.__get_line_offset()
+        self.language = self.__get_language()
         self.__retrieve_feature()
 
         if not self.feature:
             Exception('You must have at least one feature in file %s' % file)
+
+    def __get_language(self):
+        """
+
+        :return: String with language of the artifact
+        :rtype: str
+        """
+        lang_regex = r"({}:)".format(LANGUAGE)
+        hash_regex = r"({})".format('#')
+
+        for key, text in self.line_offset:
+            if re.search(hash_regex, text) and re.search(lang_regex, text):
+                lang = text.strip('\n')
+                return lang.split()[-1]
+            elif text == '\n':
+                return 'en'
 
     def __get_line_offset(self):
         """
@@ -40,12 +58,12 @@ class Artifact(object):
 
         return line_offset
 
-    def __is_feature(self, line):
+    def is_feature(self, line):
         """
 
         :return: bool
         """
-        regex = r"({})".format(FEATURE)
+        regex = r"({})".format(languages[self.language][FEATURE])
         return re.match(regex, line)
 
     def __retrieve_feature(self):
@@ -53,7 +71,14 @@ class Artifact(object):
 
         :return:
         """
+        feature = None
+
         for pos, text in self.line_offset:
-            if self.__is_feature(text):
-                self.feature = Feature(text, pos, self.line_offset)
+            if self.is_feature(text):
+                feature = Feature(text, pos, self.line_offset)
                 break
+
+        if not feature:
+            raise Exception(INVALID_FEATURE_MSG)
+
+        self.feature = feature

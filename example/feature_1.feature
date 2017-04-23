@@ -1,6 +1,6 @@
 # Created by yreis at 4/11/17
 @criar_comentario
-Feature: Create comment
+Funcionalidade: Create comment
 
 @criar_comentario_simples
 Scenario: create comment

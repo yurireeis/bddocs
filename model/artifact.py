@@ -63,7 +63,7 @@ class Artifact(object):
 
         :return: bool
         """
-        regex = r"({})".format(languages[self.language][FEATURE])
+        regex = r"({})".format(languages[self.language][FEATURE][0])
         return re.match(regex, line)
 
     def __retrieve_feature(self):
@@ -75,7 +75,7 @@ class Artifact(object):
 
         for pos, text in self.line_offset:
             if self.is_feature(text):
-                feature = Feature(text, pos, self.line_offset)
+                feature = Feature(text, pos, self.line_offset, self.language)
                 break
 
         if not feature:

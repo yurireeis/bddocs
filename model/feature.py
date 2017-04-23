@@ -1,5 +1,6 @@
 import re
 from config.settings import VALUE_PROPOSITION, ACTOR, OBJECTIVE, SCENARIO
+from model.i18n import languages
 from model.scenario import Scenario
 
 
@@ -13,7 +14,7 @@ class Feature(object):
     line_offset = []
     tags = []
 
-    def __init__(self, title, start, line_offset):
+    def __init__(self, title, start, line_offset, language):
         """
 
         :param title: the feature title
@@ -23,6 +24,7 @@ class Feature(object):
         :param line_offset:
         :type line_offset:
         """
+        self.language = language
         self.title = title
         self.start_line = start
         self.line_offset = line_offset
@@ -54,13 +56,13 @@ class Feature(object):
         regex = r"({})".format(VALUE_PROPOSITION)
         return re.search(regex, line)
 
-    def __is_scenario(self, line):
+    def is_scenario(self, line):
         """
 
         :return:
         """
-        regex = r"({})".format(SCENARIO)
-        return re.search(regex, line)
+        regex = r"({})".format(languages[self.language][SCENARIO][0])
+        return re.match(regex, line)
 
     def __is_tag(self, line):
         """
@@ -98,7 +100,7 @@ class Feature(object):
         scenarios = []
         rows = [x[1] for x in self.line_offset]
         for pos in range(self.start_line, len(self.line_offset)):
-            if self.__is_scenario(rows[pos]):
+            if self.is_scenario(rows[pos]):
                 scenarios.append(Scenario(rows[pos], pos, self.line_offset))
 
         self.scenarios = scenarios

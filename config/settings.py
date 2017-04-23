@@ -3,14 +3,14 @@ ARTIFACTS_EXTENSION = '.feature'
 
 # regex support string
 FEATURE = 'feature'
-SCENARIO = 'Scenario'
+SCENARIO = 'scenario'
 ACTOR = 'As a'
 VALUE_PROPOSITION = 'So that'
 OBJECTIVE = 'I want'
 CONTEXT = 'Given'
 ACTION = 'When'
 EXPECTED_BEHAVIOR = 'Then'
-LANGUAGE = 'language:'
+LANGUAGE = 'language'
 
 # default filename for exports
 DEFAULT_FILENAME = 'default'

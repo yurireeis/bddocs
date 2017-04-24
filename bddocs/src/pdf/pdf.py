@@ -1,5 +1,5 @@
-from config.settings import NO_STEPS_MSG, NO_SCENARIOS_MSG, NO_VALUE_MSG
-from src.pdf.style import Style
+from bddocs.config.settings import NO_VALUE_MSG, NO_STEPS_MSG, NO_SCENARIOS_MSG
+from bddocs.src.pdf.style import Style
 
 
 class PDF(Style):

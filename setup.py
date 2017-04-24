@@ -12,9 +12,16 @@ def readme():
         return f.read()
 
 setup(name='bddocs',
-      version='0.37',
+      version='0.41',
       description='Create end-user readable docs in Pythonic way',
-      packages=['bddocs'],
+      packages=[
+          'bddocs/model',
+          'bddocs/src/graphs',
+          'bddocs/src/html',
+          'bddocs/src/markup',
+          'bddocs/src/pdf',
+          'bddocs/config',
+      ],
       long_description=readme(),
       author='Yuri Reis & Alexandre Reis',
       install_requires=[

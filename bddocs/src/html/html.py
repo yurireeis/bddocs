@@ -1,5 +1,5 @@
-from config.settings import NO_VALID_PROPOSITION_MSG, NO_SCENARIOS_MSG, NO_STEPS_MSG, DEFAULT_FILENAME
-from src.markup import markup
+from bddocs.config.settings import NO_VALID_PROPOSITION_MSG, NO_STEPS_MSG, NO_SCENARIOS_MSG, DEFAULT_FILENAME
+from bddocs.src.markup import markup
 
 
 class HTML(object):
@@ -79,4 +79,3 @@ class HTML(object):
 
         with open(DEFAULT_FILENAME + '.html', 'w') as file:
             return file.write(str(self.html_page))
-

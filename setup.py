@@ -12,7 +12,7 @@ def readme():
         return f.read()
 
 setup(name='bddocs',
-      version='0.41',
+      version='0.43',
       description='Create end-user readable docs in Pythonic way',
       packages=[
           'bddocs/model',

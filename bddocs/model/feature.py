@@ -63,7 +63,7 @@ class Feature(object):
         :return:
         """
         regex = r"({})".format(languages[self.language][SCENARIO][0])
-        return re.match(regex, line)
+        return re.search(regex, line)
 
     def __is_tag(self, line):
         """

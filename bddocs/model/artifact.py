@@ -65,7 +65,7 @@ class Artifact(object):
         :return: bool
         """
         regex = r"({})".format(languages[self.language][FEATURE][0])
-        return re.match(regex, line)
+        return re.search(regex, line)
 
     def __retrieve_feature(self):
         """

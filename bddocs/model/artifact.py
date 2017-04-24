@@ -1,6 +1,8 @@
 import re
-from config.i18n import languagesfrom config.settings import LANGUAGE, INVALID_FEATURE_MSG,FEATURE
-from model.feature import Feature
+
+from bddocs.config.i18n import languages
+from bddocs.config.settings import LANGUAGE, FEATURE, INVALID_FEATURE_MSG
+from bddocs.model.feature import Feature
 
 
 class Artifact(object):

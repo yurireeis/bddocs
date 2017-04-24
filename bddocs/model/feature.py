@@ -1,7 +1,8 @@
 import re
-from config.i18n import languages
-from config.settings import VALUE_PROPOSITION, ACTOR, OBJECTIVE, SCENARIO
-from model.scenario import Scenario
+
+from bddocs.config.i18n import languages
+from bddocs.config.settings import ACTOR, OBJECTIVE, VALUE_PROPOSITION, SCENARIO
+from bddocs.model.scenario import Scenario
 
 
 class Feature(object):

@@ -1,10 +1,9 @@
 import os
 import re
 
-from config.settings import ARTIFACTS_EXTENSION, INVALID_PATH_MSG, NO_VALID_ARTIFACTS_MSG, \
-    NOT_IMPLEMENTED, CORE_FEATURE
-
-from model.artifact import Artifact
+from bddocs.config.settings import NOT_IMPLEMENTED, CORE_FEATURE, INVALID_PATH_MSG, ARTIFACTS_EXTENSION, \
+    NO_VALID_ARTIFACTS_MSG
+from bddocs.model.artifact import Artifact
 
 
 class Documentation(object):
@@ -150,7 +149,7 @@ class Documentation(object):
         :type path: str
         """
         if not os.path.exists(self.path):
-            raise Exception(NO_VALID_ARTIFACTS_MSG)
+            raise Exception(INVALID_PATH_MSG)
 
         for root, sub_dirs, files in os.walk(self.path):
             for file in files:
@@ -158,4 +157,4 @@ class Documentation(object):
                     self.artifacts.append(Artifact(root, file))
 
         if not self.artifacts:
-            raise Exception(INVALID_PATH_MSG)
+            raise Exception(NO_VALID_ARTIFACTS_MSG)

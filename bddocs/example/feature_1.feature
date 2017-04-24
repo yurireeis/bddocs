@@ -1,6 +1,7 @@
 # Created by yreis at 4/11/17
 @criar_comentario
 Feature: Create comment
+  As an application user
 
 @criar_comentario_simples
 Scenario: create comment
